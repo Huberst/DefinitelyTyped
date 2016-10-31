@@ -48,16 +48,18 @@ export interface InferableComponentDecorator {
 export declare function connect(): InferableComponentDecorator;
 
 export declare function connect<TStateProps, TDispatchProps, TOwnProps>(
-    mapStateToProps: FuncOrSelf<MapStateToProps<TStateProps, TOwnProps>>,
+    mapStateToProps: FactoryFuncOrSelf<MapStateToProps<TStateProps, TOwnProps>, TOwnProps>,
     mapDispatchToProps?: FuncOrSelf<MapDispatchToPropsFunction<TDispatchProps, TOwnProps> | MapDispatchToPropsObject>
 ): ComponentDecorator<TStateProps & TDispatchProps, TOwnProps>;
 
 export declare function connect<TStateProps, TDispatchProps, TOwnProps>(
-    mapStateToProps: FuncOrSelf<MapStateToProps<TStateProps, TOwnProps>>,
+    mapStateToProps: FactoryFuncOrSelf<MapStateToProps<TStateProps, TOwnProps>, TOwnProps>,
     mapDispatchToProps: FuncOrSelf<MapDispatchToPropsFunction<TDispatchProps, TOwnProps> | MapDispatchToPropsObject>,
     mergeProps: MergeProps<TStateProps, TDispatchProps, TOwnProps>,
     options?: Options
 ): ComponentDecorator<TStateProps & TDispatchProps, TOwnProps>;
+
+type FactoryFuncOrSelf<TMapStateToProps, TOwnProps> = TMapStateToProps | ((state?: any, ownProps?: TOwnProps) => TMapStateToProps);
 
 type FuncOrSelf<T> = T | (() => T);
 
